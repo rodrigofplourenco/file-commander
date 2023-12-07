@@ -7,13 +7,23 @@ const __dirname = path.dirname(__filename);
 
 async function main() {
   const commandFilePath = path.resolve(__dirname, './command.txt');
+  const commandFileHandler = await fs.open(commandFilePath, 'r');
   const watcher = fs.watch(commandFilePath);
 
   for await (const event of watcher) {
     const { eventType } = event;
 
     if (eventType === 'change') {
-      console.log(event);
+      const { size } = await commandFileHandler.stat();
+
+      const buffer = Buffer.alloc(size);
+      const offset = 0;
+      const length = buffer.byteLength;
+      const position = 0;
+
+      const content = await commandFileHandler.read(buffer, offset, length, position);
+
+      console.log(content);
     }
   }
 }
