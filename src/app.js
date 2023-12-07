@@ -10,20 +10,24 @@ async function main() {
   const commandFileHandler = await fs.open(commandFilePath, 'r');
   const watcher = fs.watch(commandFilePath);
 
+  commandFileHandler.on('change', async () => {
+    const { size } = await commandFileHandler.stat();
+
+    const buffer = Buffer.allocUnsafe(size); // Used allocUnsafe since it's faster and we're filling it, so no sensitive data is exposed
+    const offset = 0;
+    const length = buffer.byteLength;
+    const position = 0;
+
+    const content = await commandFileHandler.read(buffer, offset, length, position);
+
+    console.log(content);
+  });
+
   for await (const event of watcher) {
     const { eventType } = event;
 
     if (eventType === 'change') {
-      const { size } = await commandFileHandler.stat();
-
-      const buffer = Buffer.allocUnsafe(size); // Used allocUnsafe since it's faster and we're filling it, so no sensitive data is exposed
-      const offset = 0;
-      const length = buffer.byteLength;
-      const position = 0;
-
-      const content = await commandFileHandler.read(buffer, offset, length, position);
-
-      console.log(content);
+      commandFileHandler.emit('change');
     }
   }
 }
