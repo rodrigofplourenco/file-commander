@@ -1,0 +1,13 @@
+{
+  "name": "file_commander",
+  "version": "1.0.0",
+  "description": "An application that allows you to execute filesystem events through command.txt file",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "keywords": [],
+  "author": "Rodrigo Lourenço <rodrigofplourenco2002@gmail.com>",
+  "license": "ISC"
+}
