@@ -18,7 +18,8 @@ async function main() {
     const length = buffer.byteLength;
     const position = 0;
 
-    const content = await commandFileHandler.read(buffer, offset, length, position);
+    await commandFileHandler.read(buffer, offset, length, position);
+    const content = buffer.toString('utf8');
 
     console.log(content);
   });
