@@ -16,7 +16,7 @@ async function main() {
     if (eventType === 'change') {
       const { size } = await commandFileHandler.stat();
 
-      const buffer = Buffer.alloc(size);
+      const buffer = Buffer.allocUnsafe(size); // Used allocUnsafe since it's faster and we're filling it, so no sensitive data is exposed
       const offset = 0;
       const length = buffer.byteLength;
       const position = 0;
