@@ -16,3 +16,4 @@
 <p>It only supports one command at a time</p>
 <p>You can add multiple lines in add to the file command</p>
 <p>Rename command can also be used to MOVE files</p>
+<p>Add to file command can also be used to CREATE files with content</p>

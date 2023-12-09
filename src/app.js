@@ -2,6 +2,8 @@ import fs from 'node:fs/promises';
 import url from 'node:url';
 import path from 'node:path';
 
+let addedText; // This variable is just to prevent double adding to file (since OS sometimes call the file 2 times)
+
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -108,5 +110,20 @@ async function renameFile(oldPath, newPath) {
 }
 
 async function addToFile(path, text) {
+  if (addedText === text) return;
+
+  try {
+    const fileHandler = await fs.open(path, 'a');
+
+    await fileHandler.write(text);
+
+    await fileHandler.close();
+
+    addedText = text;
   
+    console.log(`You successfully appended ${text} to ${path} file!`);
+  } catch (err) {
+    console.error(`An error has occurred while adding text to the file ${path}!`);
+    console.error(err);
+  }
 }
