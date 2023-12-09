@@ -12,5 +12,6 @@
 <code>rename the file %oldPath% to %newPath%</code><br>
 <code>add to the file %path%: %text%</code>
 
-<h3>Disclaimers</h3>
+<h2>Warnings</h2>
 <p>It only supports one command at a time</p>
+<p>You can add multiple lines in add to the file command</p>

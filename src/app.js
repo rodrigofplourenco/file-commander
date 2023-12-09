@@ -78,7 +78,18 @@ async function createFile(path) {
 }
 
 async function deleteFile(path) {
+  try {
+    await fs.unlink(path);
   
+    console.log(`The file ${path} was succesfully deleted!`);
+  } catch (err) {
+    if (err.code == 'ENOENT') {
+      console.error(`The file ${path} don't exists!`);
+    } else {
+      console.error(`An error has occurred while deleting the file ${path}!`);
+      console.error(err);
+    }
+  }
 }
 
 async function renameFile(oldPath, newPath) {
