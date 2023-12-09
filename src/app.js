@@ -93,7 +93,18 @@ async function deleteFile(path) {
 }
 
 async function renameFile(oldPath, newPath) {
+  try {
+    await fs.rename(oldPath, newPath);
   
+    console.log(`The file ${oldPath} was succesfully renamed to ${newPath}!`);
+  } catch (err) {
+    if (err.code == 'ENOENT') {
+      console.error(`The file ${oldPath} don't exists!`);
+    } else {
+      console.error(`An error has occurred while renaming the file ${oldPath}!`);
+      console.error(err);
+    }
+  }
 }
 
 async function addToFile(path, text) {

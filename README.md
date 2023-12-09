@@ -15,3 +15,4 @@
 <h2>Warnings</h2>
 <p>It only supports one command at a time</p>
 <p>You can add multiple lines in add to the file command</p>
+<p>Rename command can also be used to MOVE files</p>
