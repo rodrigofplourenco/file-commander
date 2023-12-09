@@ -5,7 +5,10 @@ import path from 'node:path';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const CREATE_FILE_COMMAND = 'create a file';
+const CREATE_FILE_COMMAND = 'create the file';
+const DELETE_FILE_COMMAND = 'delete the file';
+const RENAME_FILE_COMMAND = 'rename the file';
+const ADD_TO_FILE_COMMAND = 'add to the file';
 
 async function main() {
   const commandFilePath = path.resolve(__dirname, './command.txt');
@@ -23,10 +26,30 @@ async function main() {
     await commandFileHandler.read(buffer, offset, length, position);
     const command = buffer.toString('utf8');
 
-    if (command.includes(CREATE_FILE_COMMAND)) {
+    if (command.startsWith(CREATE_FILE_COMMAND)) {
       const filePath = command.substring(CREATE_FILE_COMMAND.length + 1);
 
-      createFile(filePath);
+      await createFile(filePath);
+    }
+
+    if (command.startsWith(DELETE_FILE_COMMAND)) {
+      const filePath = command.substring(DELETE_FILE_COMMAND.length + 1);
+
+      await deleteFile(filePath);
+    }
+
+    if (command.startsWith(RENAME_FILE_COMMAND)) {
+      const commandContent = command.substring(RENAME_FILE_COMMAND.length + 1);
+      const [oldPath, newPath] = commandContent.split(' to ');
+
+      await renameFile(oldPath, newPath);
+    }
+
+    if (command.startsWith(ADD_TO_FILE_COMMAND)) {
+      const commandContent = command.substring(ADD_TO_FILE_COMMAND.length + 1);
+      const [path, text] = commandContent.split(': ');
+
+      await addToFile(path, text);
     }
   });
 
@@ -52,4 +75,16 @@ async function createFile(path) {
 
     console.log(`The file ${path} was succesfully created!`);
   }
+}
+
+async function deleteFile(path) {
+  
+}
+
+async function renameFile(oldPath, newPath) {
+  
+}
+
+async function addToFile(path, text) {
+  
 }

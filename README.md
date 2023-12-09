@@ -7,7 +7,10 @@
 <code>npm run start</code>
 
 <h2>Commands (just replace %tag% with whatever you want in command.txt)</h2>
-<code>create a file %path%</code><br>
+<code>create the file %path%</code><br>
+<code>delete the file %path%</code><br>
+<code>rename the file %oldPath% to %newPath%</code><br>
+<code>add to the file %path%: %text%</code>
 
 <h3>Disclaimers</h3>
 <p>It only supports one command at a time</p>
