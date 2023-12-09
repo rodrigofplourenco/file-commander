@@ -5,6 +5,8 @@ import path from 'node:path';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const CREATE_FILE_COMMAND = 'create a file';
+
 async function main() {
   const commandFilePath = path.resolve(__dirname, './command.txt');
   const commandFileHandler = await fs.open(commandFilePath, 'r');
@@ -19,9 +21,13 @@ async function main() {
     const position = 0;
 
     await commandFileHandler.read(buffer, offset, length, position);
-    const content = buffer.toString('utf8');
+    const command = buffer.toString('utf8');
 
-    console.log(content);
+    if (command.includes(CREATE_FILE_COMMAND)) {
+      const filePath = command.substring(CREATE_FILE_COMMAND.length + 1);
+
+      createFile(filePath);
+    }
   });
 
   for await (const event of watcher) {
@@ -33,3 +39,17 @@ async function main() {
   }
 }
 main();
+
+async function createFile(path) {
+  try {
+    const existingFileHandler = await fs.open(path, 'r');
+    await existingFileHandler.close();
+    
+    console.error(`The file ${path} already exists!`);
+  } catch (err) {
+    const newFileHandler = await fs.open(path, 'w');
+    await newFileHandler.close();
+
+    console.log(`The file ${path} was succesfully created!`);
+  }
+}

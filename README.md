@@ -6,5 +6,8 @@
 <code>npm install</code><br>
 <code>npm run start</code>
 
-<h2>Commands</h2>
-<p>TO DO...</p>
+<h2>Commands (just replace %tag% with whatever you want in command.txt)</h2>
+<code>create a file %path%</code><br>
+
+<h3>Disclaimers</h3>
+<p>It only supports one command at a time</p>
